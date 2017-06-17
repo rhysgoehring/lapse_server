@@ -6,13 +6,14 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "dotenv": "^4.0.0",
     "express": "~4.14.1",
-    "jade": "~1.11.0",
-    "jwt-simple": "^0.5.1",
+    "humps": "^2.0.0",
+    "jsonwebtoken": "^7.4.1",
     "knex": "^0.13.0",
     "morgan": "~1.7.0",
     "pg": "^6.2.4",
