@@ -10,9 +10,9 @@ exports.up = function(knex) {
     table.string('date', 20);
     table.string('duration', 25);
     table.string('lapse_url').notNullable().defaultTo('https://s3-us-west-2.amazonaws.com/rhyslapse/Videos/june14-xvidmpeg40001-1223.avi');
-    table.string('pic_1').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
-    table.string('pic_2').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
-    table.string('pic_3').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
+    table.string('pic_1_url').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
+    table.string('pic_2_url').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
+    table.string('pic_3_url').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
     table.timestamps(true, true);
   });
 };

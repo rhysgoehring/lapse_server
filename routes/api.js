@@ -1,9 +1,11 @@
 'use strict';
 
-const index = require('./index');
-const users = require('./users');
+
 const express = require('express');
 const router = express.Router();
+const index = require('./index');
+const users = require('./users');
+
 
 router.use('/', index);
 router.use('/users', users);

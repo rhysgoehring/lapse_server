@@ -4,59 +4,45 @@ const app = express();
 const knex = require('../knex');
 const humps = require('humps');
 const bcrypt = require('bcryptjs');
-const jwt = ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
 router.get('/', function(req, res, next) {
-  console.log(req.body)
-  res.sendStatus(200)
+  res.send('you\'re in users').end();
 
 });
 
 router.post('/', function(req, res, next) {
-  const email = req.body.email;
-  const password = req.body.password;
-  const firstName = req.body.first_name;
-  const lastName = req.body.last_name;
-  const zip = req.body.zip;
-  const profilePic = req.body.profile_pic
-  const saltrounds = 10
+  const newUser = req.body;
+  
+  const saltRounds = 10;
 
-  const token = jwt.sign({
-    email: user[0].email,
-    password: user[0].password
-  }, process.env.secret)
+  
 
-  if (!email || !password) {
-    return res.statusCode(422).body({error: 'You must provide email and password'});
+  if (!newUser.email || !newUser.password || !newUser.username || !newUser.zip) {
+    return res.send('You must provide an email, password, username and your zip code');
   }
 
-  knex('users').where('email', email).then((seatsTaken) => {
-    if (seatsTaken > 0) {
-      return res.statusCode(422)
-    } else {
-      knex('users').returning([
-        'id',
-        'first_name',
-        'last_name',
-        'email',
-        'zip',
-        'profile_pic',
-        'hashed_password'
-      ]).insert({
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
-        zip: zip,
-        profile_pic: profilePic,
-        hashed_password: bcrypt.hashSync(password, saltRounds)
-      }).then((user) => {
-        res.cookie('token', token, {httpOnly: true});
-        console.log('@@@@@TOKEN IS:', token)
-        console.log('#####DATA[0] is ', data[0]);
-      })
-    }
- })
- });
- module.exports = router;
+  bcrypt.hash(newUser.password, saltRounds).then((hash) => {
+    newUser.hashed_password = hash;
+    delete newUser.password;
+    console.log('newUser', newUser, 'hashed_password:', newUser.hashed_password);
+
+    knex('users').returning('*').insert(newUser).then((user) => {
+      delete user[0].hashed_password
+      let token = jwt.sign(user[0], process.env.token)
+      console.log('###USER[0] is: ', user[0])
+      console.log('@@@@@TOKEN IS:', token);
+      res.cookie('token', token, {httpOnly: true});
+      res.cookie('loggedIn', true)
+   
+      res.send(user[0]);
+      
+    })
+
+  })
+
+
+});
+module.exports = router;
