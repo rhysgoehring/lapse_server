@@ -7,7 +7,9 @@ exports.up = function(knex) {
     table.text('email').notNullable();
     table.specificType('hashed_password', 'char(60)').notNullable();
     table.integer('zip').notNullable();
-    table.string('profile_pic').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png')
+    table.string('profile_pic').defaultTo('https://upload.wikimedia.org/wikipedia/commons/3/3e/Image_needed_LHB.png');
+    table.timestamps(true, true);
+    
   });
 
 };
