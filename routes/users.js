@@ -14,30 +14,33 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  const newUser = req.body;
+  let username = req.body.username.toLowerCase();
+  let email = req.body.email;
+  let password  = req.body.password;
   
-  const saltRounds = 8;
+  
 
   if (!newUser.password || !newUser.username ) {
-    return res.status(422).send({error: 'You must provide a username, password, and your email address'});
+    res.status(422).send({error: 'You must provide a username, password, and your email address'});
+  } else {
+    knex('users').where('username', username).then((seatsTaken) => {
+      if (seatsTaken.length > 0) {
+        return res.status(422).send({error: 'Username is in use'})
+      }
+        knex('users').returning('*')
+          .insert({
+            username: username,
+            hashed_password: bcrypt.hashSync(password, 8),
+            email: email
+          }).then((user) => {
+            let token = jwt.sign({userID: user[0].id, username: user[0].username, password: user[0].hashed_password, email: user[0].email}, process.env.token)
+            res.json({token: token})
+          })
+      
+    })
   }
 
-  bcrypt.hash(newUser.password, saltRounds).then((hash) => {
-    newUser.hashed_password = hash;
-    delete newUser.password;
-    
 
-    knex('users').returning('*').insert(newUser).then((user) => {
-      delete user[0].hashed_password
-      let token = jwt.sign(user[0], process.env.token)
-      console.log('###USER[0] is: ', user[0])
-      console.log('@@@@@TOKEN IS:', token);
-      // res.cookie('token', token, {httpOnly: true});
-      // res.cookie('loggedIn', true)
-      res.json({token: token, user: user[0]});
-      // res.send(user[0]);
-    })
-  })
 });
 
 router.post('/signin', function(req, res, next) {
