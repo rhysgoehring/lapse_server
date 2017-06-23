@@ -1,9 +1,3 @@
-
-
-
-
-
-
 exports.seed = function(knex) {
   return knex('users').del()
     .then(function() {
@@ -20,4 +14,3 @@ exports.seed = function(knex) {
       return knex.raw("select setval('users_id_seq', (select max(id) from users));")
     });
 };
-
