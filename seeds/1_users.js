@@ -1,19 +1,23 @@
-exports.seed = function(knex, Promise) {
+
+
+
+
+
+
+exports.seed = function(knex) {
   return knex('users').del()
-    .then(function () {
+    .then(function() {
+      // Inserts seed entries
       return knex('users').insert([
         {
-          id: 1,
-          username: 'rhysgoehring',
-          email: 'rhysgoehring@gmail.com',
-          hashed_password:'$2a$10$1TqtrM2gmNM.TGUaZR50Ze.kKLg.OGGUBLhjj3JGckki5f50gQjoe',
-          zip: 80301,
-          profile_pic: 'http://i.imgur.com/gh1E6Lu.jpg'
-      
-        },
-      ]);
-    })
-    .then(() => {
-        return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));")
-      })
+        username: 'rhysgoehring',
+        email: 'rhysgoehring@gmail.com',
+        hashed_password: '$2a$12$YbS5MlJIsaRiYs2Qt8cxeOgAwyLpbT2qnwgNRQLv0Hvx6wb9mxQaC',
+        profile_pic:  'http://i.imgur.com/gh1E6Lu.jpg'
+      }
+    ]);
+    }).then(() => {
+      return knex.raw("select setval('users_id_seq', (select max(id) from users));")
+    });
 };
+

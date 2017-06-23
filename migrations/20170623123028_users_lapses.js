@@ -2,7 +2,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('users_lapses', (table) => {
-    table.increments();
+    table.increments().primary();
     table.integer('user_id').references('id').inTable('users').notNullable();
     table.integer('lapse_id').references('id').inTable('lapses').notNullable();
   });
