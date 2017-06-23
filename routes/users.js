@@ -13,21 +13,19 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.post('/', function(req, res, next) {
+router.post('/signup', function(req, res, next) {
   const newUser = req.body;
   
-  const saltRounds = 10;
+  const saltRounds = 8;
 
-  
-
-  if (!newUser.password || !newUser.username || !newUser.zip) {
-    return res.send('You must provide a username, password, and your zip code');
+  if (!newUser.password || !newUser.username ) {
+    return res.status(422).send({error: 'You must provide a username, password, and your email address'});
   }
 
   bcrypt.hash(newUser.password, saltRounds).then((hash) => {
     newUser.hashed_password = hash;
     delete newUser.password;
-    console.log('newUser', newUser, 'hashed_password:', newUser.hashed_password);
+    
 
     knex('users').returning('*').insert(newUser).then((user) => {
       delete user[0].hashed_password
@@ -36,14 +34,35 @@ router.post('/', function(req, res, next) {
       console.log('@@@@@TOKEN IS:', token);
       // res.cookie('token', token, {httpOnly: true});
       // res.cookie('loggedIn', true)
-      
-      
-      res.send(user[0]);
-      
+      res.json({token: token, user: user[0]});
+      // res.send(user[0]);
     })
-
   })
-
-
 });
+
+router.post('/signin', function(req, res, next) {
+  const authUser = req.body;
+  
+  knex('users')
+    .where('username', authUser.username)
+    .first()
+    .then((userQuery) => {
+      if (!userQuery) {
+        res.send({message: 'Please Sign Up before Logging In'})
+      } else {
+        console.log('userQuery is:', userQuery, 'authUser is:', authUser);
+        bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
+          if (result) {
+            let token = jwt.sign(userQuery, process.env.token)
+            res.json({token: token, user: userQuery})
+          } else {
+            res.send({message: 'Incorrect Password'})
+          }
+        })
+      }
+    })
+  
+});
+
+
 module.exports = router;
