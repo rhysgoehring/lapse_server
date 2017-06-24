@@ -14,33 +14,34 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  let username = req.body.username.toLowerCase();
-  let email = req.body.email;
-  let password  = req.body.password;
+  let newUser = req.body;
+  let username = newUser.username.toLowerCase();
+  let email = newUser.email;
+  let password = newUser.password;
+  const salt = bcrypt.genSaltSync(10)
   
   
 
-  if (!newUser.password || !newUser.username ) {
-    res.status(422).send({error: 'You must provide a username, password, and your email address'});
-  } else {
-    knex('users').where('username', username).then((seatsTaken) => {
-      if (seatsTaken.length > 0) {
-        return res.status(422).send({error: 'Username is in use'})
-      }
-        knex('users').returning('*')
-          .insert({
-            username: username,
-            hashed_password: bcrypt.hashSync(password, 8),
-            email: email
-          }).then((user) => {
-            let token = jwt.sign({userID: user[0].id, username: user[0].username, password: user[0].hashed_password, email: user[0].email}, process.env.token)
-            res.json({token: token})
-          })
-      
-    })
+  if (!password || !username ) {
+    return res.status(422).send({error: 'You must provide a username, password, and your email address'});
   }
 
-
+    knex('users').returning('*')
+      .insert({
+        username: username,
+        email: email,
+        hashed_password: bcrypt.hashSync(password, salt)
+      }).then((user) => {
+      delete password;
+      let token = jwt.sign(user[0], process.env.token)
+      console.log('###USER[0] is: ', user[0])
+      console.log('@@@@@TOKEN IS:', token);
+      res.cookie('token', token, {httpOnly: true});
+      // res.cookie('loggedIn', true)
+      res.json({token: token, user: user[0]});
+      // res.send(user[0]);
+    })
+ 
 });
 
 router.post('/signin', function(req, res, next) {
@@ -53,9 +54,10 @@ router.post('/signin', function(req, res, next) {
       if (!userQuery) {
         res.send({message: 'Please Sign Up before Logging In'})
       } else {
-        console.log('userQuery is:', userQuery, 'authUser is:', authUser);
+        
         bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
           if (result) {
+            delete authUser.password
             let token = jwt.sign(userQuery, process.env.token)
             res.json({token: token, user: userQuery})
           } else {
