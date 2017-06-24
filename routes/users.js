@@ -8,12 +8,12 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.send('you\'re in users').end();
 
 });
 
-router.post('/signup', function(req, res, next) {
+router.post('/signup', function(req, res) {
   let newUser = req.body;
   let username = newUser.username.toLowerCase();
   let email = newUser.email;
@@ -44,7 +44,11 @@ router.post('/signup', function(req, res, next) {
  
 });
 
-router.post('/signin', function(req, res, next) {
+router.get('/signin', (req, res, next) => {
+  res.status(200).send('Route to Sign In Working')
+})
+
+router.post('/signin', function(req, res) {
   const authUser = req.body;
   
   knex('users')
