@@ -37,7 +37,7 @@ router.post('/signup', function(req, res) {
       let token = jwt.sign(user[0], process.env.token)
       console.log('###USER[0] is: ', user[0])
       console.log('@@@@@TOKEN IS:', token);
-      res.cookie('token', token);
+      // res.cookie('token', token, null);
       // res.cookie('loggedIn', true)
       res.send({token: token, currentUser: user[0]});
       // res.send(user[0]);
