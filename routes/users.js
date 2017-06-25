@@ -5,6 +5,7 @@ const knex = require('../knex');
 const humps = require('humps');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config();
 
@@ -36,9 +37,9 @@ router.post('/signup', function(req, res) {
       let token = jwt.sign(user[0], process.env.token)
       console.log('###USER[0] is: ', user[0])
       console.log('@@@@@TOKEN IS:', token);
-      res.cookie('token', token, {httpOnly: true});
+      res.cookie('token', token);
       // res.cookie('loggedIn', true)
-      res.json({token: token, user: user[0]});
+      res.send({token: token, currentUser: user[0]});
       // res.send(user[0]);
     })
  
@@ -63,7 +64,7 @@ router.post('/signin', function(req, res) {
           if (result) {
             delete authUser.password
             let token = jwt.sign(userQuery, process.env.token)
-            res.json({token: token, user: userQuery})
+            res.send({token: token, currentUser: userQuery});
           } else {
             res.send({message: 'Incorrect Password'})
           }
