@@ -14,7 +14,7 @@ exports.seed = function(knex) {
           playlist_url: "https://cdn.flowplayer.org/391106/456979.m3u8",
           url1: "https://cdn.flowplayer.org/391106/456979-1080p.mp4",
           url2: "https://cdn.flowplayer.org/391106/456979-720p.mp4",
-          url3: "https://https://cdn.flowplayer.org/391106/456979.mp4",
+          url3: "https://cdn.flowplayer.org/391106/456979.mp4",
           url4: "https://cdn.flowplayer.org/391106/456979-216p.mp4",
           pic_1_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/4-25000000000.jpg",
           pic_1_title: "First Picture of the Day",
@@ -25,7 +25,30 @@ exports.seed = function(knex) {
           pic_3_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/4-25000001440.jpg",
           pic_3_title: "End of the Day",
           pic_3_desc: "This was the 1440th picture in the time lapse taken just before 8PM"
-      }
+      },
+      {
+        name: 'June All-Day Lapse',
+        user_id: 1,
+        location: 'Boulder, CO',
+        description: 'Another all day lapse this, taken in June. The Pi took 1,622 pictures every thirty seconds starting in the morning and caught some cool cloud movement in the afternoon.',
+        date: '6/15/2017',
+        duration: 'Over 12 hours condensed into a 1 minute video',
+        votes: 0,
+        playlist_url: "https://cdn.flowplayer.org/391106/457871.m3u8",
+        url1: "https://cdn.flowplayer.org/391106/457871-1080p.mp4",
+        url2: "https://cdn.flowplayer.org/391106/457871-720p.mp4",
+        url3: "https://cdn.flowplayer.org/391106/457871.mp4",
+        url4: "https://cdn.flowplayer.org/391106/457871-216p.mp4",
+        pic_1_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/6-15_8_am0000.jpg",
+        pic_1_title: "First Picture of the Day",
+        pic_1_desc: "The first picture of the time lapse, taken around 8:00 in the morning",
+        pic_2_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/6-15_8_am0749.jpg",
+        pic_2_title: "Clouds Coming In",
+        pic_2_desc: "This was the 749th picture taken during the time lapse at around 3:30 PM",
+        pic_3_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/6-15_8_am1446.jpg",
+        pic_3_title: "Afternoon Clouds",
+        pic_3_desc: "This was the 1446th picture in the time lapse taken just before 8PM"
+    }
     ]);
     }).then(() => {
       return knex.raw("select setval('lapses_id_seq', (select max(id) from lapses));")
