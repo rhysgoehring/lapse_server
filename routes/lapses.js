@@ -8,6 +8,17 @@ router.get('/', (req, res, next) => {
   .catch((err) => next(err));
 });
 
+router.get('/:id', (req, res, next) => {
+  console.log('here');
+  const id = req.params.id;
+  return knex('lapses')
+  .select('*')
+  .where('id', id)
+  .first()
+  .then((lapse)=> res.json(lapse))
+  .catch((err)=> next(err));
+});
+
 router.get('/comments', (req ,res ,next) => {
   knex('comments').returning('*').then((comments)=> res.json(comments))
   .catch((err) => next(err));
