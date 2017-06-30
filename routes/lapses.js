@@ -25,7 +25,6 @@ router.get('/comments', (req ,res ,next) => {
 });
 
 router.get('/comments/:id', (req ,res ,next) => {
-  console.log('in comments:id')
   const id = req.params.id
   return knex('comments')
     .select('*')
@@ -35,6 +34,18 @@ router.get('/comments/:id', (req ,res ,next) => {
     .catch((err) => next(err));
 });
 
+router.post('/comments/:id', (req ,res ,next) => {
+  const id = req.params.id;
+  const commenter = req.body.commenter;
+  const body = req.body.body;
+  console.log("adding body:", body, " to lapseId: ", id, "commenter is: ", commenter)
+  
+  return knex('comments')
+  .returning('*')
+  .insert({lapse_id: id, commenter: commenter, body: body})
+  .then((response) => res.send(response))
+  .catch((err)=> next(err));
+});
 
 
 module.exports = router;
