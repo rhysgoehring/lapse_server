@@ -31,7 +31,7 @@ router.get('/comments/:id', (req ,res ,next) => {
   return knex('comments')
     .select('*')
     .where('lapse_id', id)
-    .orderBy('created_at', 'asc')
+    .orderBy('created_at', 'desc')
     .then((comments) => {
       
       res.json(comments)
@@ -51,6 +51,18 @@ router.post('/comments/:id', (req ,res ,next) => {
   .then((response) => res.send(response))
   .catch((err)=> next(err));
 });
+
+
+router.post('/:id/votes', (req, res, next) => {
+  knex('lapses')
+    .update('votes', knex.raw('votes + 1'))
+    .where({id: req.params.id})
+    .then(() => knex('lapses').where({id: req.params.id}).first())
+    .then(lapse => res.json({votes: lapse.votes}))
+    .catch(err => next(err))
+})
+
+
 
 
 module.exports = router;
