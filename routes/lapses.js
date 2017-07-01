@@ -26,12 +26,16 @@ router.get('/comments', (req ,res ,next) => {
 
 router.get('/comments/:id', (req ,res ,next) => {
   const id = req.params.id
+  console.log('req.params', req.params)
   console.log('id coming to server', id)
   return knex('comments')
     .select('*')
     .where('lapse_id', id)
-    .first()
-    .then((comments) => res.json(comments))
+    .orderBy('created_at', 'asc')
+    .then((comments) => {
+      
+      res.json(comments)
+    })
     .catch((err) => next(err));
 });
 
