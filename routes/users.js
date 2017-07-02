@@ -32,14 +32,14 @@ router.post('/signup', function(req, res) {
         username: username,
         email: email,
         hashed_password: bcrypt.hashSync(password, salt)
-      }).then((user) => {
-      delete password;
-      let token = jwt.sign(user[0], process.env.token)
-      console.log('###USER[0] is: ', user[0])
-      console.log('@@@@@TOKEN IS:', token);
+        }).then((user) => {
+          delete password;
+          let token = jwt.sign(user[0], process.env.token)
+          console.log('###USER[0] is: ', user[0])
+          console.log('@@@@@TOKEN IS:', token);
       // res.cookie('token', token, null);
       // res.cookie('loggedIn', true)
-      res.send({token: token, currentUser: user[0]});
+          res.send({token: token, currentUser: user[0]});
       // res.send(user[0]);
     })
  
@@ -55,23 +55,22 @@ router.post('/signin', function(req, res) {
   knex('users')
     .where('username', authUser.username)
     .first()
-    .then((userQuery) => {
-      if (!userQuery) {
-        res.send({message: 'Please Sign Up before Logging In'})
-      } else {
+      .then((userQuery) => {
+        if (!userQuery) {
+          res.send({message: 'Please Sign Up before Logging In'})
+        } else {
         
-        bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
-          if (result) {
-            delete authUser.password
-            let token = jwt.sign(userQuery, process.env.token)
-            res.send({token: token, currentUser: userQuery});
-          } else {
-            res.send({message: 'Incorrect Password'})
+          bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
+            if (result) {
+              delete authUser.password
+              let token = jwt.sign(userQuery, process.env.token)
+                res.send({token: token, currentUser: userQuery});
+              } else {
+                res.send({message: 'Incorrect Password'})
+              }
+            })
           }
         })
-      }
-    })
-  
 });
 
 
