@@ -18,19 +18,21 @@ router.post('/signup', function(req, res) {
   let newUser = req.body;
   let username = newUser.username.toLowerCase();
   let email = newUser.email;
+  let profPicUrl = newUser.profilePicUrl
   let password = newUser.password;
   const salt = bcrypt.genSaltSync(10)
   
   
 
   if (!password || !username ) {
-    return res.status(422).send({error: 'You must provide a username, password, and your email address'});
+    return res.status(422).send({error: 'You must provide a username, password - you can update the rest of your profile later'});
   }
 
     knex('users').returning('*')
       .insert({
         username: username,
         email: email,
+        profile_pic: profPicUrl,
         hashed_password: bcrypt.hashSync(password, salt)
         }).then((user) => {
           delete password;
