@@ -10,9 +10,9 @@ const bodyParser = require('body-parser');
 const api = require('./routes/api');
 const app = express();
 
-app.use(bodyParser.json({ type: '*/*' }));
+app.use(bodyParser.json());
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin": *);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
