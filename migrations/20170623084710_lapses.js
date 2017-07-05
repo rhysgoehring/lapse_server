@@ -5,6 +5,7 @@ exports.up = function(knex) {
     table.increments().primary();
     table.string('name', 255).notNullable();
     table.integer('user_id').references('id').inTable('users').notNullable().onDelete('CASCADE');
+    table.string('username').references('username').inTable('users').notNullable().onDelete('CASCADE');
     table.string('location', 255).defaultTo('No location provided');
     table.string('description', 255).defaultTo('No description provided');
     table.string('date', 20).defaultTo('No date provided');

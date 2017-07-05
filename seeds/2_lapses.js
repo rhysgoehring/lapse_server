@@ -6,6 +6,7 @@ exports.seed = function(knex) {
         {
           name: 'An April Day in Boulder',
           user_id: 1,
+          username: 'rhysgoehring',
           location: 'Boulder, CO',
           description: 'One of my first all day time lapses with my Raspberry Pi Zero W. The Pi took a picture every 30 seconds and 1,474 pictures total.',
           date: '4/25/2017',
@@ -29,6 +30,7 @@ exports.seed = function(knex) {
       {
         name: 'June All-Day Lapse',
         user_id: 1,
+        username: 'rhysgoehring',
         location: 'Boulder, CO',
         description: 'Another all day lapse this one taken in June. The Pi took 1,622 pictures every thirty seconds starting in the morning and caught some cool cloud movement in the afternoon.',
         date: '6/15/2017',
@@ -52,6 +54,7 @@ exports.seed = function(knex) {
     {
       name: 'Evening Lapse in May',
       user_id: 1,
+      username: 'rhysgoehring',
       location: 'Boulder, CO',
       description: 'I started this lapse later in the day at around 4:30 PM, the Pi took a picture every 30 seconds for around 5 hours for a total of 588 pictures. I decided for shorter lapses to take pictures every 15 seconds after this.',
       date: '5/20/2017',
@@ -75,6 +78,7 @@ exports.seed = function(knex) {
   {
     name: 'My First Time Lapse',
     user_id: 2,
+    username:'donaldtrump',
     location: 'Boulder, CO',
     description: 'This was my first and best time lapse so far, I took it a day after rhysgoehring took his in May. I broke into his apartment and my tech guy used some sort of Pie to make this so don\'t blame ME for the quality.',
     date: 'May 21st',
@@ -98,6 +102,7 @@ exports.seed = function(knex) {
   {
     name: 'Brohemian rhapsody',
     user_id: 3,
+    username: 'boulderBro',
     location: 'Boulder, where else?',
     description: 'So like, I\'ve always been super into photography since I was like 22 and a half. I made this dope video on some guys balcony when he wasn\'t home which was super righteous.',
     date: 'June 12th',
