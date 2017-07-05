@@ -9,8 +9,8 @@ const cors = require('cors');
 
 const api = require('./routes/api');
 const app = express();
-app.use(cors());
-app.options('*', cors());
+// app.use(cors());
+// app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
