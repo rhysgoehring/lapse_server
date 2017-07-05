@@ -1,7 +1,20 @@
 
 const express = require('express');
 const router = express.Router();
+const app = express();
 const knex = require('../knex.js');
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin": "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+router.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin": "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 router.get('/', (req, res, next) => {
   knex('lapses')
