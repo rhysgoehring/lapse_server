@@ -8,6 +8,7 @@ const users = require('./users');
 const lapses = require('./lapses');
 
 
+
 router.use('/', index);
 router.use('/users', users);
 router.use('/lapses', lapses);

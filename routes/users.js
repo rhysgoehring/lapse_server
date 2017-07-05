@@ -9,9 +9,9 @@ const cookieParser = require('cookie-parser')
 
 require('dotenv').config();
 
-
 router.get('/', function(req, res) {
   res.send('you\'re in users').end();
+
 });
 
 router.get('/:id/lapses', function(req, res, next) {
@@ -72,6 +72,7 @@ router.post('/signin', function(req, res) {
         if (!userQuery) {
           res.send({message: 'Please Sign Up before Logging In'})
         } else {
+        
           bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
             if (result) {
               delete authUser.password
