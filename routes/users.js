@@ -73,7 +73,6 @@ router.post('/signin', function(req, res) {
         if (!userQuery) {
           res.send({message: 'Please Sign Up before Logging In'})
         } else {
-        
           bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
             if (result) {
               delete authUser.password
