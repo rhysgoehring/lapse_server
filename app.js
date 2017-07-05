@@ -22,7 +22,7 @@ const allowCrossDomain = function(req, res, next) {
 const api = require('./routes/api');
 const app = express();
 app.use(allowCrossDomain)
-app.use(bodyParser.json({'*/*'}));
+app.use(bodyParser.json());
 
 
 app.use(logger('dev'));
