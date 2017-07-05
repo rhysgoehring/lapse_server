@@ -76,7 +76,7 @@ router.post('/signin', function(req, res) {
           bcrypt.compare(authUser.password, userQuery.hashed_password, (err, result) => {
             if (result) {
               delete authUser.password
-              let token = jwt.sign(userQuery, process.env.token)
+              let token = jwt.sign(userQuery, process.env.SECRET)
                 res.send({token: token, currentUser: userQuery});
               } else {
                 res.send({message: 'Incorrect Password'})
