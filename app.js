@@ -10,18 +10,21 @@ const cors = require('cors');
 const api = require('./routes/api');
 const app = express();
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json({ type: '*/*' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 
 app.use(logger('dev'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api', api)
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api', api)
 
 
 app.use(function(err, req, res, next) {
