@@ -11,6 +11,7 @@ const cors = require('cors');
 
 app.use(cors());
 app.options('*', cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 /**
  * Get port from environment and store in Express.
