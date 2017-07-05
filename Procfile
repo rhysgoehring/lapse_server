@@ -1,1 +1,1 @@
-web: node ./bin/www && node ./app
+web: node ./bin/www
