@@ -4,14 +4,6 @@ const router = express.Router();
 const app = express();
 const knex = require('../knex.js');
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*");
-
-});
-
-router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*");
-});
 
 router.get('/', (req, res, next) => {
   knex('lapses')

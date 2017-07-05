@@ -4,21 +4,25 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
 
 
 const api = require('./routes/api');
 const app = express();
-// app.use(cors());
-// app.options('*', cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*");
-  next();
-});
-
+app.use(allowCrossDomain)
+app.use(bodyParser.json({'*/*'}));
 
 
 app.use(logger('dev'));

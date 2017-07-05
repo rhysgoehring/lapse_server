@@ -9,12 +9,6 @@ const cookieParser = require('cookie-parser')
 
 require('dotenv').config();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*");
-});
-
-router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*");
 
 router.get('/', function(req, res) {
   res.send('you\'re in users').end();
