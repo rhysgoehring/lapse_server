@@ -2,8 +2,9 @@
   "name": "lapse",
   "version": "0.0.0",
   "private": true,
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./bin/www & node app.js",
     "heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run;",
     "knex": "knex",
     "nodemon": "node app.js"
