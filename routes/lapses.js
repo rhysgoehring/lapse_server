@@ -54,7 +54,7 @@ router.post('/comments/:id', (req ,res ,next) => {
 });
 
 
-router.post('/:id/votes', (req, res, next) => {
+router.post('/:id/upVote', (req, res, next) => {
   knex('lapses')
     .update('votes', knex.raw('votes + 1'))
     .where({id: req.params.id})
@@ -62,6 +62,16 @@ router.post('/:id/votes', (req, res, next) => {
         .then(lapse => res.json({votes: lapse.votes}))
         .catch(err => next(err))
 })
+
+router.post('/:id/downVote', (req, res, next) => {
+  knex('lapses')
+    .update('votes', knex.raw('votes - 1'))
+    .where({id: req.params.id})
+      .then(() => knex('lapses').where({id: req.params.id}).first())
+        .then(lapse => res.json({votes: lapse.votes}))
+        .catch(err => next(err))
+})
+
 
 
 

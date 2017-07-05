@@ -14,6 +14,17 @@ router.get('/', function(req, res) {
 
 });
 
+router.get('/:id/lapses', function(req, res, next) {
+  const id = req.params.id
+  console.log(id)
+  knex('lapses')
+    .select('*')
+    .where('user_id', id)
+    .orderBy('created_at', 'desc')
+    .then(lapses => res.json(lapses))
+    .catch(err => next(err))
+});
+
 router.post('/signup', function(req, res) {
   let newUser = req.body;
   let username = newUser.username.toLowerCase();
