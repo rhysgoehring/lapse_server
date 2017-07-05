@@ -71,7 +71,53 @@ exports.seed = function(knex) {
       pic_3_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/may204pm0564.jpg",
       pic_3_title: "Nightfall",
       pic_3_desc: "One of the last pictures in the sequence, captures the clouds moving over the mountains before it get's dark."
-  }
+  },
+  {
+    name: 'My First Time Lapse',
+    user_id: 2,
+    location: 'Boulder, CO',
+    description: 'This was my first and best time lapse so far, I took it a day after rhysgoehring took his in May. I broke into his apartment and my tech guy used some sort of Pie to make this so don\'t blame ME for the quality.',
+    date: 'May 21st',
+    duration: 'I haven\'t watched it yet, someone said around 15 seconds.',
+    votes: 0,
+    playlist_url: "https://cdn.flowplayer.org/391106/468379.m3u8",
+    url1: "https://cdn.flowplayer.org/391106/468379-1080p.mp4",
+    url2: "https://cdn.flowplayer.org/391106/468379-720p.mp4",
+    url3: "https://cdn.flowplayer.org/391106/468379.mp4",
+    url4: "https://cdn.flowplayer.org/391106/468379-216p.mp4",
+    pic_1_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/may214pm0000.jpg",
+    pic_1_title: "First picture it took",
+    pic_1_desc: "This picture's amazing. It will make the cover of National Geographic.",
+    pic_2_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/may214pm0288.jpg",
+    pic_2_title: "Amazinger Picture",
+    pic_2_desc: "Wow. They keep getting better. This was the best picture we took, I don't even like the others.",
+    pic_3_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/may214pm0381.jpg",
+    pic_3_title: "The End",
+    pic_3_desc: "Or as my Italian friends say: \'The Fin\'."
+  },
+  {
+    name: 'Brohemian rhapsody',
+    user_id: 3,
+    location: 'Boulder, where else?',
+    description: 'So like, I\'ve always been super into photography since I was like 22 and a half. I made this dope video on some guys balcony when he wasn\'t home which was super righteous.',
+    date: 'June 12th',
+    duration: 'The whole day in 45 seconds, crazy!',
+    votes: 0,
+    playlist_url: "https://cdn.flowplayer.org/391106/472387.m3u8",
+    url1: "https://cdn.flowplayer.org/391106/472387-1080p.mp4",
+    url2: "https://cdn.flowplayer.org/391106/472387-720p.mp4",
+    url3: "https://cdn.flowplayer.org/391106/472387.mp4",
+    url4: "https://cdn.flowplayer.org/391106/472387-216p.mp4",
+    pic_1_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/5-5_11_am0000.jpg",
+    pic_1_title: "Pictero Uno, Bro",
+    pic_1_desc: "Have you ever been so stoked to watch a video when this is first picture of it you see?",
+    pic_2_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/5-5_11_am0402.jpg",
+    pic_2_title: "WHOA!",
+    pic_2_desc: "This picture reminds me of this band I like, their name is Explosions in the Sky. You\'d have to hear them to get it.",
+    pic_3_url: "https://s3-us-west-2.amazonaws.com/rhyslapse/Images/5-5_11_am0765.jpg",
+    pic_3_title: "Super-Chill",
+    pic_3_desc: "This picture really mellows me out. I like to think about it when I\'m stressed out at work, it takes me to a different place. Normally it/'s the dude whose balcony I used to take this."
+   }
     ]);
     }).then(() => {
       return knex.raw("select setval('lapses_id_seq', (select max(id) from lapses));")
