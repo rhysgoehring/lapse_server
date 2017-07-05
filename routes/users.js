@@ -12,7 +12,6 @@ require('dotenv').config();
 
 router.get('/', function(req, res) {
   res.send('you\'re in users').end();
-
 });
 
 router.get('/:id/lapses', function(req, res, next) {
