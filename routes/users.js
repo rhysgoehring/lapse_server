@@ -25,6 +25,12 @@ router.get('/:id/lapses', function(req, res, next) {
     .catch(err => next(err))
 });
 
+router.put('/:id', (req, res, next) => {
+  const id = req.params.id;
+  const editUser = req.body;
+  return knex('users').returning(['username','profilePic, email']).where('id', id).update(changes).then(() => res.sendStatus(200)).catch((err) => next(err));
+});
+
 router.post('/signup', function(req, res) {
   let newUser = req.body;
   let username = newUser.username.toLowerCase();
